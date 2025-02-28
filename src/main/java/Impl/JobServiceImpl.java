@@ -1,6 +1,7 @@
 package Impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -32,6 +33,32 @@ public class JobServiceImpl implements JobService {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public boolean deleteJobById(long id) {
+		// TODO Auto-generated method stub
+	/*	for(Job job:jobs)
+		{
+			if(job.getId()==id) jobs.remove(id);
+			return true;
+		}
+		
+		return false;
+		
+		*/
+		Iterator<Job> iterator=jobs.iterator();
+		
+		while(iterator.hasNext()) {
+			Job job=iterator.next();
+			if(job.getId().equals(id)) {
+				iterator.remove();
+				return true;
+			}
+		}
+		
+		
+		return false;
 	}
 
 }
