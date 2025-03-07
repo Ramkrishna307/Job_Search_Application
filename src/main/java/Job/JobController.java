@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class JobController {
 	private JobService jobService;
-	private Long nextId=1L;
+//	private Long nextId=1L;
 	
 	public JobController(JobService jobService) {
 		
@@ -31,10 +32,10 @@ public class JobController {
 	@PostMapping("/jobs")
 	public ResponseEntity<String> createJob(@RequestBody Job job) {
 		
-		job.setId(nextId);
-		
+//		job.setId(nextId);
+//		
 		jobService.createJob(job);
-		++nextId;
+//		++nextId;
 		return new ResponseEntity<>("Job added successfully", HttpStatus.CREATED);
 	}
 	
@@ -61,6 +62,17 @@ public class JobController {
 		
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
+	}
+	
+	@PutMapping("/jobs/{id}")
+	public ResponseEntity<String> updateJob(@PathVariable long id, @RequestBody Job job){
+		boolean b=jobService.updateJob(id,job);
+		
+		if (b) {
+			return new ResponseEntity("Job Updated succesfully",HttpStatus.OK);
+		}
+		
+		return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 	
 	
